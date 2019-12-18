@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 
 const db_url = 'mongodb://localhost:3030';
 const client = new MongoClient(db_url, { useNewUrlParser: true });
@@ -31,7 +32,9 @@ client.connect().then(client => {
 
     app.locals.users = users;
     app.locals.recipes = recipes;
-}).catch(e => app.render('err/404'));
+}).catch(e => {
+    console.error(e);
+});
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -116,6 +119,7 @@ usersRouter.get('/logout', (req, res, next) => {
 usersRouter.post('/submit', (req, res, next) => {
     let recipe = {
         submiter: req.session.user.login,
+        description: req.body.description,
         name: req.body.name,
         brief: req.body.brief,
         ingridients: req.body.ingridients,
@@ -143,8 +147,16 @@ recipeRouter.get('/catalogue', (req, res, next) => {
     });
 });
 
-recipeRouter.get('/recipe:id', (req, res, next) => {
-    
+recipeRouter.get('/:id', (req, res, next) => {
+    let id = req.params.id;
+    console.log(req.params);
+
+    req.app.locals.recipes.findOne(ObjectId(id)).then(r => {
+        res.render('recipe', {recipe: r});
+    }).catch(e => {
+        console.error(e);
+        res.render('err/404');
+    })
 });
 
 app.use('/user', usersRouter);

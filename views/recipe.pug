@@ -6,9 +6,11 @@ html
             include components/header
 
             section.section.level-item.box(style={'max-width':700,'margin':'0 auto'})
-                article.has-text-centered
-                    h3.title.is-3= recipe.name
+                article
+                    h3.title.is-3.has-text-centered= recipe.name
                     //- img(src=recipe.image)
+
+                    p.content= recipe.description
 
                     .message.has-background-light(style={'margin':'15'})
                         p.message-header Ingridients
