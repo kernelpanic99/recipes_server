@@ -1,0 +1,24 @@
+html
+    include components/head
+
+    body
+        .container
+            include components/header
+
+            section.section      
+                if recipes.length == 0
+                    article.message
+                        p.message-header Nothing here
+                        p.message-body 
+                            | There is no recipes yet you can <a href="/login">sign in</a> or
+                            | <a href="/register">sign up</a> to add some.
+                else
+                    article.level
+                        each recipe in recipes
+                            a.card(href="/recipe/" + recipe._id, style={'max-width': 260})
+                                img.card-image(src=recipe.image, style={'min-width': 260})
+                                .card-header
+                                    .card-header-title= recipe.name
+                                .card-content
+                                    h6.title.is-6= recipe.submiter
+                                    p.content= recipe.brief

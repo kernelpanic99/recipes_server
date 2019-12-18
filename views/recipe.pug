@@ -1,0 +1,26 @@
+html
+    include components/head
+
+    body
+        .container
+            include components/header
+
+            section.section.level-item.box(style={'max-width':700,'margin':'0 auto'})
+                article.has-text-centered
+                    h3.title.is-3= recipe.name
+                    //- img(src=recipe.image)
+
+                    .message.has-background-light(style={'margin':'15'})
+                        p.message-header Ingridients
+                        ul.message-body.content.has-text-left
+                            each i in recipe.ingridients
+                                li.content(style={'list-style-type':'disc'})= i
+
+                    section.section
+                        h5.title.is-5 Directions
+
+                        each a in recipe.actions
+                            .media.content
+                                .media-left 
+                                    strong= a.order
+                                p.media-content= a.description

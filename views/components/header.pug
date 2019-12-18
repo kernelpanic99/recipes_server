@@ -1,0 +1,16 @@
+header.navbar.has-background-light(style={'padding':'0 30'})
+    .navbar-menu.is-active
+        nav.navbar-start
+            a.navbar-item(href="/") Home
+            a.navbar-item(href="/recipe/catalogue") Browse
+            a.navbar-item(href="/about") About
+        
+        unless user
+            script= 'console.log('+user+');'
+            nav.navbar-end
+                a.navbar-item(href="/user/login") Sign in
+                a.navbar-item(href="/user/register") Sign up
+        else
+            nav.navbar-end
+                a.navbar-item(href="/user/submit")= "Submit recipe as " + user.login
+                a.navbar-item(href="/user/logout") Logout

@@ -1,0 +1,11 @@
+html
+    include ../components/head
+
+    body
+        .container
+            include ../components/header
+
+            .notification.is-danger
+                p 
+                    |you are forbidden to add new recipes until you <a href="/user/login">sign in
+                    |</a> or <a href="/user/login">sign up</a>.

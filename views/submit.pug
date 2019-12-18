@@ -1,0 +1,47 @@
+html
+    include components/head
+    body
+        .container
+            include components/header
+            
+            section.section
+                form.box#form(action="/user/submit", method="post")
+                    h3.title.is-3 SUbmit your recipe
+                    .field
+                        label.label(for="name") Recipe name
+                        .control
+                            input.input(type="text", name="name", id="name")
+                    
+                    .field
+                        label.label(for="brief") Brief
+                        .control
+                            textarea.textarea(name="brief", id="brief", rows="2", style={resize:'none'})
+                        p.help This will be displayed in your recipe card.
+                    
+                    .field
+                        label.label(for="description")
+                        .control
+                            textarea.textarea(name="description", id="description", style={resize:'none'})
+                        p.help Full description of your recipe
+                    
+                    .field
+                        label.label(for="ingridients")
+                        .control
+                            textarea.textarea(name="ingridients", id="ingridients", style={resize:'none'})
+                        p.help Enter ingridients of your recipe separated by ','
+
+                    h5.title.is-5 Provide directions of your recipe
+
+                    #directions.field
+                    .field.is-grouped
+                        .control
+                            button.button.is-link#dir-add(type="button") Add
+                        .control
+                            button.button.is-danger#dir-pop(type="button") Pop
+                        .control
+                            button.button.is-success#submit Submit
+                        .control
+                            button.button.is-warning(type="reset") Reset All
+
+            include components/jquery
+            script(src="/js/submit.js")

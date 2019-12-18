@@ -1,0 +1,37 @@
+html
+    include components/head
+
+    body(style={'height':'100%'})
+        .container
+            include components/header
+
+            section.section
+                h2.title.is-2.has-text-centered Sign up
+
+                .box(style={'max-width': 480, 'margin': '0 auto'})
+                    form(method="post", action="/user/register", enctype="application/x-www-form-urlencoded")
+                        .field 
+                            label.label Name
+                            .control
+                                input.input.is-info(type="text", name="name", id="name")
+
+                        .field 
+                            label.label Surname
+                            .control
+                                input.input.is-info(type="text", name="surname", id="surname")
+
+                        .field 
+                            label.label login
+                            .control
+                                input.input.is-primary(type="text", name="login", id="login")
+
+                        .field 
+                            label.label password
+                            .control
+                                input.input.is-primary(type="password", name="password", id="password")
+                        
+                        .field.is-grouped   
+                            .control
+                                button.button.is-link(type="submit") sign up
+                            .control
+                                button.button(type="reset") reset
