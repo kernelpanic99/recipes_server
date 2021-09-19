@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use(express.static('public/'));
 app.use(session({ secret: 'adwoawjfinaf' }));
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res, _next) => {
     console.log(req.session);
     res.render('index', { user: req.session.user });
 });
@@ -56,25 +56,26 @@ const usersRouter = express.Router();
 
 usersRouter.all('/submit', (req, res, next) => {
     if (!req.session.user) {
-        res.render('err/403');
+        res.status(403)
+            .render('err/403');
     } else {
         next();
     }
 });
 
-usersRouter.get('/login', (req, res, next) => {
+usersRouter.get('/login', (_req, res, _next) => {
     res.render('login');
 });
 
-usersRouter.get('/register', (req, res, next) => {
+usersRouter.get('/register', (_req, res, _next) => {
     res.render('register');
 });
 
-usersRouter.get('/submit', (req, res, next) => {
+usersRouter.get('/submit', (req, res, _next) => {
     res.render('submit', { user: req.session.user });
 });
 
-usersRouter.post('/register', (req, res, next) => {
+usersRouter.post('/register', (req, res, _next) => {
     let user = {
         login: req.body.login,
         name: req.body.name,
@@ -82,9 +83,9 @@ usersRouter.post('/register', (req, res, next) => {
         password: req.body.password
     };
 
-    req.app.locals.users.insertOne(user).then(r => {
+    req.app.locals.users.insertOne(user).then(_r => {
         res.redirect('/user/login');
-    }).catch(e => {
+    }).catch(_e => {
         res.send('User already exists');
     });
 });
@@ -105,18 +106,18 @@ usersRouter.post('/login', (req, res, next) => {
         } else {
             res.send('User not exists');
         }
-    }).catch(e => {
+    }).catch(_e => {
         res.status(500);
         next();
     });
 });
 
-usersRouter.get('/logout', (req, res, next) => {
+usersRouter.get('/logout', (req, res, _next) => {
     req.session.user = undefined;
     res.redirect('/');
 });
 
-usersRouter.post('/submit', (req, res, next) => {
+usersRouter.post('/submit', (req, res, _next) => {
     let recipe = {
         submiter: req.session.user.login,
         description: req.body.description,
@@ -140,19 +141,19 @@ const recipeRouter = express.Router();
 recipeRouter.get('/catalogue', (req, res, next) => {
     req.app.locals.recipes.find({}).toArray().then(a => {
         console.log(a);
-        res.render('catalogue', {recipes: a});
-    }).catch(e => {
+        res.render('catalogue', { recipes: a });
+    }).catch(_e => {
         res.status(500);
         next();
     });
 });
 
-recipeRouter.get('/:id', (req, res, next) => {
+recipeRouter.get('/:id', (req, res, _next) => {
     let id = req.params.id;
     console.log(req.params);
 
     req.app.locals.recipes.findOne(ObjectId(id)).then(r => {
-        res.render('recipe', {recipe: r});
+        res.render('recipe', { recipe: r });
     }).catch(e => {
         console.error(e);
         res.render('err/404');
@@ -162,7 +163,7 @@ recipeRouter.get('/:id', (req, res, next) => {
 app.use('/user', usersRouter);
 app.use('/recipe', recipeRouter);
 
-app.use((req, res, next) => {
+app.use((_req, res, _next) => {
     if (res.statusCode = 404) {
         res.render('err/404');
     }
