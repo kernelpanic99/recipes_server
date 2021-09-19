@@ -7,7 +7,7 @@ Simple web app to share recipes
 - clone repository: <code>git clone https://github.com/ArturNikolaenko/recipes_server.git</code>
 - install dependencies: <code>npm i</code> - to 
 - run server <code>npm start</code>
-- app will be available at [](http://localhost:3000)
+- app will be available at http://localhost:3000
 
 ### Technologies used
   
