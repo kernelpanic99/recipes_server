@@ -5,7 +5,7 @@ Simple web app to share recipes
 
 - install mongodb according to [Official guide](https://docs.mongodb.com/guides/server/install/)
 - clone repository: <code>git clone https://github.com/ArturNikolaenko/recipes_server.git</code>
-- install dependencies: <code>npm i</code> - to 
+- install dependencies: <code>npm i</code>
 - run server <code>npm start</code>
 - app will be available at http://localhost:3000
 
